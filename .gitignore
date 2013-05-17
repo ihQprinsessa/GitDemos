@@ -228,6 +228,7 @@ Temp/
 Library/
 obj/
 *.svd
+*.sln
 *.suo
 
 !Library/*.asset
