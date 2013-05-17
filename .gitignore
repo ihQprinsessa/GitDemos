@@ -221,3 +221,4 @@ pip-log.txt
 *.dll
 *.userprefs
 *.unityproj
+CompilationCompleted.txt
