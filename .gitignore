@@ -219,6 +219,7 @@ pip-log.txt
 ######
 
 *.dll
+*.dll.mdb
 *.userprefs
 *.unityproj
 CompilationCompleted.txt
