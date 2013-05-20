@@ -4,10 +4,11 @@ using System.Collections;
 public class MoverBase : MonoBehaviour {
 	
 	private bool colliding=false;
+	MouseLook mouse_look;
 	
 	// Use this for initialization
 	void Start () {
-		
+		mouse_look=GetComponent<MouseLook>();
 		Debug.Log(""+collider.GetInstanceID());
 	}
 	
@@ -18,6 +19,10 @@ public class MoverBase : MonoBehaviour {
 		var ang_dir=Vector3.zero;
 		
 		//input
+		
+		if (Input.GetMouseButtonDown(1)){
+			mouse_look.turnedOn=!mouse_look.turnedOn;
+		}
 		
 		//forward/backward
 		if (Input.GetKey(KeyCode.W)){
@@ -48,11 +53,11 @@ public class MoverBase : MonoBehaviour {
 		
 		//rotation
 		
-		if (Input.GetKey(KeyCode.Q)){
+		if (Input.GetKey(KeyCode.R)){
 			ang_dir+=Vector3.down;
 		}
 		else
-		if (Input.GetKey(KeyCode.E)){
+		if (Input.GetKey(KeyCode.F)){
 			ang_dir+=Vector3.up;
 		}
 		
@@ -64,11 +69,11 @@ public class MoverBase : MonoBehaviour {
 			ang_dir+=Vector3.right;
 		}
 		
-		if (Input.GetKey(KeyCode.R)){
+		if (Input.GetKey(KeyCode.Q)){
 			ang_dir+=Vector3.forward;
 		}
 		else
-		if (Input.GetKey(KeyCode.F)){
+		if (Input.GetKey(KeyCode.E)){
 			ang_dir+=Vector3.back;
 		}
 		
@@ -91,7 +96,7 @@ public class MoverBase : MonoBehaviour {
 		
 		//clamp velocities
 		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,10);
-		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,5);
+		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,1);
 		
 		
 		colliding=false;
