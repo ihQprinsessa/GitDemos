@@ -4,12 +4,12 @@ using System.Collections;
 public class MoverBase : MonoBehaviour {
 	
 	private bool colliding=false;
-	MouseLook mouse_look;
+	MouseLook2 mouse_look;
 	
 	// Use this for initialization
 	void Start () {
-		mouse_look=GetComponent<MouseLook>();
-		Debug.Log(""+collider.GetInstanceID());
+		mouse_look=transform.FindChild("direction").GetComponent<MouseLook2>();
+		Debug.Log(""+mouse_look);
 	}
 	
 	// Update is called once per frame
@@ -83,21 +83,22 @@ public class MoverBase : MonoBehaviour {
 		Move(dir,10);
 		Rotate(ang_dir,1);
 		
+					
+		//mouse rotation
+		if (mouse_look.turnedOn)
+			rigidbody.MoveRotation(mouse_look.transform.rotation);
+
+		//rigidbody.velocity=getForceDrag(dir,rigidbody.velocity,0.60f);
+		rigidbody.angularVelocity=getForceDrag(ang_dir,rigidbody.angularVelocity,0.60f);
 		
-		if (dir==Vector3.zero){
-			if (rigidbody.velocity!=Vector3.zero)
-				rigidbody.velocity*=0.55f;
-		}
+		if (dir==Vector3.zero)
+			rigidbody.velocity*=0.6f;
 		
-		if (ang_dir==Vector3.zero){
-			if (rigidbody.angularVelocity!=Vector3.zero)
-				rigidbody.angularVelocity*=0.55f;
-		}
+		
 		
 		//clamp velocities
 		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,10);
 		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,1);
-		
 		
 		colliding=false;
 	}
@@ -138,4 +139,41 @@ public class MoverBase : MonoBehaviour {
 		//colliding=true;
 	}
 	*/
+	
+	void OnGUI(){
+		
+
+		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_look.turnedOn);
+		
+	}
+	
+	/// <summary>
+	/// Gets the force dragged in all non thrusted directions.
+	/// </summary>
+	/// <returns> a new force vector
+	/// The force drag.
+	/// </returns>
+	/// <param name='thrust'>
+	/// Thrust. If thrust is on drag won't affect the force.
+	/// </param>
+	/// <param name='current'>
+	/// Current. Current force
+	/// </param>
+	/// <param name='drag'>
+	/// Drag. amout of drag
+	/// </param>
+	private Vector3 getForceDrag(Vector3 thrust, Vector3 current,float drag){
+		float vx=current.x,vy=current.y,vz=current.z;
+		
+		if (thrust.x==0){
+			vx=current.x*drag;
+		}
+		if (thrust.y==0){
+			vy=current.y*drag;
+		}
+		if (thrust.z==0){
+			vz=current.z*drag;
+		}
+		return new Vector3(vx,vy,vz);
+	}
 }
