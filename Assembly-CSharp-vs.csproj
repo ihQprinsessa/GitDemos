@@ -44,6 +44,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Objects\AirDrag.cs" />
+     <Compile Include="Assets\Objects\Mover\MouseLook.cs" />
      <Compile Include="Assets\Objects\Mover\MoverBase.cs" />
      <Compile Include="Assets\Scripts\ROTATE.cs" />
   </ItemGroup>
