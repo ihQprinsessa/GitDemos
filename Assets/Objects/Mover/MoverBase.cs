@@ -3,13 +3,30 @@ using System.Collections;
 
 public class MoverBase : MonoBehaviour {
 	
-	private bool colliding=false;
+	private bool colliding=false,mouse_move=true;
 	MouseLook2 mouse_look;
+	MouseLook mouse_look_camera;
+	
+	bool speed_mode=false;
 	
 	// Use this for initialization
 	void Start () {
-		mouse_look=transform.FindChild("direction").GetComponent<MouseLook2>();
+		mouse_look=transform.FindChild("light").GetComponent<MouseLook2>();
+		mouse_look_camera=transform.FindChild("Camera").GetComponent<MouseLook>();
 		Debug.Log(""+mouse_look);
+	}
+	
+	void Update() {
+				
+		if (Input.GetMouseButtonDown(1)){
+			mouse_move=!mouse_move;
+			mouse_look_camera.turnedOn=!mouse_move;
+		}
+		
+		if (Input.GetKey(KeyCode.CapsLock)){
+			speed_mode=!speed_mode;
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -19,11 +36,7 @@ public class MoverBase : MonoBehaviour {
 		var ang_dir=Vector3.zero;
 		
 		//input
-		
-		if (Input.GetMouseButtonDown(1)){
-			mouse_look.turnedOn=!mouse_look.turnedOn;
-		}
-		
+
 		//forward/backward
 		if (Input.GetKey(KeyCode.W)){
 			dir+=Vector3.forward;
@@ -77,27 +90,33 @@ public class MoverBase : MonoBehaviour {
 			ang_dir+=Vector3.back;
 		}
 		
-		
 		//movement
 		//if (!colliding)
-		Move(dir,10);
-		Rotate(ang_dir,1);
 		
-					
+		//speed
+		var speed=10;
+		if (Input.GetKey(KeyCode.LeftShift)||speed_mode){
+			speed=100;
+		}
+		
+		Move(dir,speed);
+		Rotate(ang_dir,1);
+			
 		//mouse rotation
-		if (mouse_look.turnedOn)
+		if (mouse_move)
 			rigidbody.MoveRotation(mouse_look.transform.rotation);
 
 		//rigidbody.velocity=getForceDrag(dir,rigidbody.velocity,0.60f);
-		rigidbody.angularVelocity=getForceDrag(ang_dir,rigidbody.angularVelocity,0.60f);
+		//rigidbody.angularVelocity=getForceDrag(ang_dir,rigidbody.angularVelocity,0.60f);
 		
-		if (dir==Vector3.zero)
-			rigidbody.velocity*=0.6f;
-		
-		
+		//if (dir==Vector3.zero)
+		if (Input.GetKey(KeyCode.LeftAlt))
+			rigidbody.AddForce(-rigidbody.velocity*10);
+		if (ang_dir==Vector3.zero)
+			rigidbody.angularVelocity*=0.6f;
 		
 		//clamp velocities
-		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,10);
+		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,100);
 		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,1);
 		
 		colliding=false;
@@ -114,40 +133,13 @@ public class MoverBase : MonoBehaviour {
 		Debug.Log("Colliding!");
 		colliding=true;
 	}
-	/*
-	void OnCollisionEnter(Collision other){
-		Debug.Log("en!");
-		//colliding=true;
-	}
-	void OnCollisionExit(Collision other){
-		Debug.Log("ex!");
-		//colliding=true;
-	}
-	
-	
-	void OnTriggerEnter(Collider other){
-		Debug.Log("t en!");
-		//colliding=true;
-	}
-	void OnTriggerExit(Collider other){
-		Debug.Log("t ex!");
-		//colliding=true;
-	}
-	
-	void OnTriggerStay(Collider other){
-		Debug.Log("t stay!");
-		//colliding=true;
-	}
-	*/
-	
-	void OnGUI(){
-		
 
-		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_look.turnedOn);
-		
+	void OnGUI(){
+		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_move+"\nSpeed: "+rigidbody.velocity);
 	}
 	
 	/// <summary>
+	/// DEV.RUBBISH!
 	/// Gets the force dragged in all non thrusted directions.
 	/// </summary>
 	/// <returns> a new force vector

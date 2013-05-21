@@ -44,10 +44,16 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Objects\AirDrag.cs" />
      <Compile Include="Assets\Objects\Mover\MouseLook.cs" />
+     <Compile Include="Assets\Objects\Mover\MouseLook2.cs" />
      <Compile Include="Assets\Objects\Mover\MoverBase.cs" />
+     <Compile Include="Assets\Scripts\AirDrag.cs" />
+     <Compile Include="Assets\Scripts\LevelRandomizer.cs" />
+     <Compile Include="Assets\Scripts\LightColorChanger.cs" />
+     <Compile Include="Assets\Scripts\LightIntensityChanger.cs" />
+     <Compile Include="Assets\Scripts\MainSystem.cs" />
      <Compile Include="Assets\Scripts\ROTATE.cs" />
+     <Compile Include="Assets\Scripts\ScaleScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
