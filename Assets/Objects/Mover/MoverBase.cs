@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using NotificationSys;
 
 public class MoverBase : MonoBehaviour {
 	
-	private bool colliding=false,mouse_move=true;
+	private bool mouse_move=true;
 	MouseLook2 mouse_look;
 	MouseLook mouse_look_camera;
 	
@@ -16,7 +17,7 @@ public class MoverBase : MonoBehaviour {
 		Debug.Log(""+mouse_look);
 	}
 	
-	void Update() {
+	void Update(){
 				
 		if (Input.GetMouseButtonDown(1)){
 			mouse_move=!mouse_move;
@@ -27,14 +28,20 @@ public class MoverBase : MonoBehaviour {
 			speed_mode=!speed_mode;
 		}
 		
+		//dev
+		if (Input.GetKey(KeyCode.H)){
+			//BroadcastMessage("EXPLODE",SendMessageOptions.DontRequireReceiver);
+			
+			NotificationCenter.Instance.sendNotification(new Explosion_note(transform.position,10,5));
+			//enabled=false;
+			gameObject.SetActive(false);
+		}
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-	
 		var dir=Vector3.zero;
 		var ang_dir=Vector3.zero;
-		
 		//input
 
 		//forward/backward
@@ -110,16 +117,14 @@ public class MoverBase : MonoBehaviour {
 		//rigidbody.angularVelocity=getForceDrag(ang_dir,rigidbody.angularVelocity,0.60f);
 		
 		//if (dir==Vector3.zero)
-		if (Input.GetKey(KeyCode.LeftAlt))
-			rigidbody.AddForce(-rigidbody.velocity*10);
+		if (Input.GetKey(KeyCode.X))
+			rigidbody.AddForce(-rigidbody.velocity*3);
 		if (ang_dir==Vector3.zero)
 			rigidbody.angularVelocity*=0.6f;
 		
 		//clamp velocities
 		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,100);
 		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,1);
-		
-		colliding=false;
 	}
 	
 	void Move(Vector3 dir,float speed){
@@ -127,11 +132,6 @@ public class MoverBase : MonoBehaviour {
 	}
 	void Rotate(Vector3 dir,float speed){
 		rigidbody.AddRelativeTorque(dir*speed);
-	}
-	
-	void OnCollisionStay(Collision other){
-		Debug.Log("Colliding!");
-		colliding=true;
 	}
 
 	void OnGUI(){

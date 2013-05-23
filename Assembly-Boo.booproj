@@ -5,11 +5,11 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{2452F042-0F23-EE22-533C-7B9C9432202A}</ProjectGuid>
+	<ProjectGuid>{2410B594-36FB-888B-6214-B5E7CA69B864}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
-	<AssemblyName>Assembly-CSharp</AssemblyName>
+	<AssemblyName>Assembly-Boo</AssemblyName>
 	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
 	<FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -44,27 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Engine\EngineController.cs" />
-     <Compile Include="Assets\Engine\NotificationSys\NotificationCenter.cs" />
-     <Compile Include="Assets\Engine\NotificationSys\Notifications.cs" />
-     <Compile Include="Assets\Engine\Objects\Explosion.cs" />
-     <Compile Include="Assets\Engine\Subs.cs" />
-     <Compile Include="Assets\Engine\Timer.cs" />
-     <Compile Include="Assets\Objects\Mover\ExplodeScript.cs" />
-     <Compile Include="Assets\Objects\Mover\MouseLook.cs" />
-     <Compile Include="Assets\Objects\Mover\MouseLook2.cs" />
-     <Compile Include="Assets\Objects\Mover\MoverBase.cs" />
-     <Compile Include="Assets\Scripts\AirDrag.cs" />
-     <Compile Include="Assets\Scripts\LevelRandomizer.cs" />
-     <Compile Include="Assets\Scripts\LightColorChanger.cs" />
-     <Compile Include="Assets\Scripts\LightIntensityChanger.cs" />
-     <Compile Include="Assets\Scripts\MainSystem.cs" />
-     <Compile Include="Assets\Scripts\ROTATE.cs" />
-     <Compile Include="Assets\Scripts\ScaleScript.cs" />
-     <Compile Include="Assets\ShipScript.cs" />
-     <Compile Include="Assets\TerrainSys\AutoActive.cs" />
-     <Compile Include="Assets\TerrainSys\TerrainController.cs" />
-     <Compile Include="Assets\TerrainSys\Tile.cs" />
+     <Compile Include="Assets\TerrainSys\NewBehaviourScript.boo" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

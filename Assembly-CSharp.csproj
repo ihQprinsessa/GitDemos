@@ -44,6 +44,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Engine\EngineController.cs" />
+     <Compile Include="Assets\Engine\NotificationSys\NotificationCenter.cs" />
+     <Compile Include="Assets\Engine\NotificationSys\Notifications.cs" />
+     <Compile Include="Assets\Engine\Objects\Explosion.cs" />
+     <Compile Include="Assets\Engine\Subs.cs" />
+     <Compile Include="Assets\Engine\Timer.cs" />
+     <Compile Include="Assets\Objects\Mover\ExplodeScript.cs" />
      <Compile Include="Assets\Objects\Mover\MouseLook.cs" />
      <Compile Include="Assets\Objects\Mover\MouseLook2.cs" />
      <Compile Include="Assets\Objects\Mover\MoverBase.cs" />
@@ -54,6 +61,10 @@
      <Compile Include="Assets\Scripts\MainSystem.cs" />
      <Compile Include="Assets\Scripts\ROTATE.cs" />
      <Compile Include="Assets\Scripts\ScaleScript.cs" />
+     <Compile Include="Assets\ShipScript.cs" />
+     <Compile Include="Assets\TerrainSys\AutoActive.cs" />
+     <Compile Include="Assets\TerrainSys\TerrainController.cs" />
+     <Compile Include="Assets\TerrainSys\Tile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
