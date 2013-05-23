@@ -21,7 +21,7 @@ namespace NotificationSys{
 		
 	    private NotificationCenter()
 	    {
-			//Fill dictionary with empty lists. Not lazy. Not a problem. If there is a messagetype there ought to be at least one listener anyways.
+			//Fill dictionary with empty lists. Not lazy. Problems?
 			foreach (NotificationType t in Enum.GetValues(typeof(NotificationType))){
 				listeners.Add(t,new List<OnNotificationDelegate>());
 			}

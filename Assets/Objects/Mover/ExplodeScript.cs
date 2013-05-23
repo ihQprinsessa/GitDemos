@@ -8,6 +8,7 @@ public class ExplodeScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		NotificationCenter.Instance.addListener(EXPLODE,NotificationType.Explode);
+		NotificationCenter.Instance.addListener(DISENGAGE,NotificationType.DisengageParent);
 	}
 	
 	// Update is called once per frame
@@ -15,19 +16,19 @@ public class ExplodeScript : MonoBehaviour {
 	
 	}
 	
-	public void EXPLODE(Notification note){
-		Debug.Log("Received Explode Notification message!");
+	void DISENGAGE(Notification note){
+		var n=(DisengageParent_note)note;
 		
 		collider.enabled=true;
 		rigidbody.isKinematic=false;
 		
-		if (transform.parent.rigidbody!=null)
-			rigidbody.velocity=transform.parent.rigidbody.velocity;
+		rigidbody.velocity=n.Velocity;
 		transform.parent=null;
-		
-		
+	}
+	
+	void EXPLODE(Notification note){
 		var exp=(Explosion_note)note;
-		//exp.addForce(rigidbody);
+		exp.addForce(rigidbody);
 	}
 	
 	void OnDestroy(){

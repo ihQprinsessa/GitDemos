@@ -18,14 +18,14 @@ public class AirDrag : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		if (rigidbody.velocity!=Vector3.zero)
-			rigidbody.AddForce(rigidbody.velocity*-velocity_drag);
+		if (rigidbody.velocity!=Vector3.zero){
+			rigidbody.AddForce(-rigidbody.velocity*velocity_drag);
+			rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,velocity_max);
+		}
 
-		if (rigidbody.angularVelocity!=Vector3.zero)
-			rigidbody.AddTorque(rigidbody.angularVelocity*-angular_drag);
-	
-		//clamp velocities
-		rigidbody.velocity=Vector3.ClampMagnitude(rigidbody.velocity,velocity_max);
-		rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,angular_max);
+		if (rigidbody.angularVelocity!=Vector3.zero){
+			rigidbody.AddTorque(-rigidbody.angularVelocity*angular_drag);
+			rigidbody.angularVelocity=Vector3.ClampMagnitude(rigidbody.angularVelocity,angular_max);
+		}
 	}
 }

@@ -10,6 +10,14 @@ public class MoverBase : MonoBehaviour {
 	
 	bool speed_mode=false;
 	
+	float health=100;
+	public float Health{get{return health;}set{health=value;
+			if (health<=0){
+				health=0;
+				DestroySelf();
+			}
+		}}
+	
 	// Use this for initialization
 	void Start () {
 		mouse_look=transform.FindChild("light").GetComponent<MouseLook2>();
@@ -30,11 +38,7 @@ public class MoverBase : MonoBehaviour {
 		
 		//dev
 		if (Input.GetKey(KeyCode.H)){
-			//BroadcastMessage("EXPLODE",SendMessageOptions.DontRequireReceiver);
-			
-			NotificationCenter.Instance.sendNotification(new Explosion_note(transform.position,10,5));
-			//enabled=false;
-			gameObject.SetActive(false);
+			DestroySelf();
 		}
 	}
 	
@@ -134,8 +138,21 @@ public class MoverBase : MonoBehaviour {
 		rigidbody.AddRelativeTorque(dir*speed);
 	}
 
+	
+	void OnCollisionEnter(Collision c){
+		
+		Health-=c.impactForceSum.magnitude;
+	}
+	
+	public void DestroySelf(){
+			NotificationCenter.Instance.sendNotification(new DisengageParent_note(rigidbody.velocity));
+			NotificationCenter.Instance.sendNotification(new Explosion_note(transform.position,100,5));
+			gameObject.SetActive(false);
+	}
+	
+	
 	void OnGUI(){
-		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_move+"\nSpeed: "+rigidbody.velocity);
+		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_move+"\nSpeed: "+rigidbody.velocity+"\n\nHealth: "+health);
 	}
 	
 	/// <summary>
