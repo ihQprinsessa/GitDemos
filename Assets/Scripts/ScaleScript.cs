@@ -2,7 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class ScaleScript : MonoBehaviour {
-
+	
+	public Vector3 add_amount;
+	
 	// Use this for initialization
 	void Start () {
 	
@@ -10,7 +12,7 @@ public class ScaleScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.localScale=new Vector3(transform.localScale.x,transform.localScale.y,transform.localScale.z+0.05f);
+		transform.localScale+=add_amount;
 		rigidbody.WakeUp();
 	}
 	
