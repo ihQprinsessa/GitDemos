@@ -50,6 +50,8 @@
      <Compile Include="Assets\Engine\Objects\Explosion.cs" />
      <Compile Include="Assets\Engine\Subs.cs" />
      <Compile Include="Assets\Engine\Timer.cs" />
+     <Compile Include="Assets\Objects\MegaStructure\AutomataMovement.cs" />
+     <Compile Include="Assets\Objects\MegaStructure\MegaStructureScr.cs" />
      <Compile Include="Assets\Objects\Ship\ExplodeScript.cs" />
      <Compile Include="Assets\Objects\Ship\MouseLook.cs" />
      <Compile Include="Assets\Objects\Ship\MouseLook2.cs" />

@@ -4,6 +4,7 @@ using System.Collections;
 public class Subs{
 	
 	#region Random Subs
+	
 	/// <summary>
 	/// Random float from 0f to 1f(ex).
 	/// </summary>
