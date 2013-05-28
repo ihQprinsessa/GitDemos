@@ -11,6 +11,9 @@ public class MoverBase : MonoBehaviour {
 	MouseLook mouse_look_camera;
 	ShipScript ShipScr;
 	
+	public Camera[] cameras;
+	private int current_camera;
+	
 	bool speed_mode=false;
 	
 	float health=100;
@@ -27,7 +30,7 @@ public class MoverBase : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		mouse_look=transform.FindChild("direction").GetComponent<MouseLook2>();
-		mouse_look_camera=transform.FindChild("Camera").GetComponent<MouseLook>();
+		mouse_look_camera=transform.FindChild("CameraFP").GetComponent<MouseLook>();
 		
 		ShipScr=transform.FindChild("Ship").GetComponent<ShipScript>();
 
@@ -38,7 +41,9 @@ public class MoverBase : MonoBehaviour {
 		
 		//shoot!
 		if (Input.GetMouseButtonDown(0)){
-			Instantiate(bullet_prefab,transform.position,Quaternion.identity);
+			var obj=Instantiate(bullet_prefab,transform.position+transform.TransformDirection(Vector3.forward)*2,Quaternion.identity) as Transform;
+			obj.transform.rotation=transform.rotation;
+			obj.rigidbody.AddRelativeForce(Vector3.forward*500);
 		}
 		
 		//camera free
@@ -49,6 +54,10 @@ public class MoverBase : MonoBehaviour {
 		
 		if (Input.GetKey(KeyCode.CapsLock)){
 			speed_mode=!speed_mode;
+		}
+		
+		if (Input.GetKeyDown(KeyCode.Tab)){
+			ChangeCamera();
 		}
 		
 		//dev
@@ -176,6 +185,16 @@ public class MoverBase : MonoBehaviour {
 	void OnGUI(){
 		GUI.Box(new Rect(10,10,200,100),"Mouse move: "+mouse_move+"\nSpeed: "+rigidbody.velocity+"\n\nHealth: "+health);
 	}
+	
+	
+	public void ChangeCamera(){
+		cameras[current_camera].enabled=false;
+		current_camera++;
+		if (current_camera==cameras.Length)
+			current_camera=0;
+		cameras[current_camera].enabled=true;
+	}
+	
 	
 	/// <summary>
 	/// DEV.RUBBISH!

@@ -49,7 +49,6 @@ public class AutomataMovement : MonoBehaviour {
 		//change direction
 		if (other.GetComponent<MegaStructureScr>()!=null)
 			ChangeDirection(!move_ok);
-		Debug.Log("Trigger HIT!");
 	}
 	void OnTriggerStay(Collider other){
 		//change direction
