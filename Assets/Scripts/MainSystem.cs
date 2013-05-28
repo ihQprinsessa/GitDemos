@@ -12,6 +12,6 @@ public class MainSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		Timer.UpdateTimers();
 	}
 }

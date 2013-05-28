@@ -4,6 +4,8 @@ using NotificationSys;
 
 public class MoverBase : MonoBehaviour {
 	
+	public Transform bullet_prefab;
+	
 	private bool mouse_move=true;
 	MouseLook2 mouse_look;
 	MouseLook mouse_look_camera;
@@ -34,6 +36,12 @@ public class MoverBase : MonoBehaviour {
 	
 	void Update(){
 		
+		//shoot!
+		if (Input.GetMouseButtonDown(0)){
+			Instantiate(bullet_prefab,transform.position,Quaternion.identity);
+		}
+		
+		//camera free
 		if (Input.GetMouseButtonDown(1)){
 			mouse_move=!mouse_move;
 			mouse_look_camera.turnedOn=!mouse_move;

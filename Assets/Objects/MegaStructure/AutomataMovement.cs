@@ -5,39 +5,64 @@ public class AutomataMovement : MonoBehaviour {
 	
 	public float speed;
 	public Vector3 direction;
-	bool movingOnward,move_ok;
+	bool movingOnward,move_ok,triggerstay;
 	Timer timer;
 	
-	public Collider restrictBox;
+	Transform LimitObject;
 	// Use this for initialization
 	void Start () {
 		timer=new Timer(1000,RandomDirection);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+		
 		if (movingOnward){
 			transform.position+=direction*speed;
 		}
 		else{
 			transform.position+=-direction*speed;
 		}
+		
 		/*
-		if (Vector3.Distance(restrictBox.bounds.center,transform.position)>restrictBox.size.magnitude/2){
+		if (Mathf.Abs(LimitObject.position.y-transform.position.y)>9){
+		*/
+		if (!triggerstay){
 			ChangeDirection(!move_ok);
 		}
 		else
 			move_ok=movingOnward;
-			*/
+		
+		timer.Active=triggerstay;
+		
+		triggerstay=false;
 	}
 	
-	void OnCollision(Collider other){
+	void OnCollisionEnter(Collision other){
 		//change direction
+		if (other.gameObject.GetComponent<AutomataMovement>()!=null)
+			ToggleDirection();
+		//Debug.Log("Trigger HIT!");
+	}
+	
+	void OnTriggerExit(Collider other){
+		//change direction
+		if (other.GetComponent<MegaStructureScr>()!=null)
+			ChangeDirection(!move_ok);
+		Debug.Log("Trigger HIT!");
+	}
+	void OnTriggerStay(Collider other){
+		//change direction
+		
+		if (other.GetComponent<MegaStructureScr>()!=null)
+			triggerstay=true;
 	}
 	
 	void ChangeDirection(bool direction){
 		movingOnward=direction;
-		timer.Delay=Random.Range(0,1000);
+		if (timer!=null)
+			timer.Delay=Random.Range(1000,5000);
+
 	}
 	void RandomDirection(){
 		ChangeDirection(Subs.RandomBool());
@@ -45,5 +70,13 @@ public class AutomataMovement : MonoBehaviour {
 
 	void ToggleDirection(){
 		ChangeDirection(!movingOnward);
+	}
+	
+	public void setLimitObject(Transform obj){
+		LimitObject=obj;
+	}
+	
+	public void MoveDirection(bool onward){
+		movingOnward=onward;
 	}
 }

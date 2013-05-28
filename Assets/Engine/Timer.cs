@@ -7,6 +7,7 @@ public class Timer{
 	//class
 	public delegate void TimerEvent();
 	public static List<Timer> timers=new List<Timer>(),timers_destroyed=new List<Timer>();
+	public bool Active;
 	
 	public static void UpdateTimers () {
 		foreach (var t in timers){
@@ -37,6 +38,7 @@ public class Timer{
 	}
 	
 	public void Update(){
+		if (!Active) return;
 		tick-=Time.deltaTime;
 		
 		if (tick<=0){
